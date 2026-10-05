@@ -1,0 +1,24 @@
+name: GamerStealLifeSteal
+version: ${project.version}
+main: dev.gamersteal.lifesteal.GamerStealLifeSteal
+api-version: '26.3'
+description: UUID-based lifesteal with persistent 48-hour eliminations.
+authors: [GamerSteal]
+softdepend: [LuckPerms, Essentials, Vault, Geyser-Spigot, floodgate]
+
+commands:
+  gslifesteal:
+    description: Manage GamerStealLifeSteal.
+    usage: /gslifesteal
+    aliases: [gsl]
+
+permissions:
+  gslifesteal.admin:
+    description: Allows all GamerStealLifeSteal administration commands.
+    default: op
+  gslifesteal.bypass:
+    description: Exempts a player from heart steals and elimination.
+    default: false
+  gslifesteal.reload:
+    description: Allows reloading GamerStealLifeSteal configuration.
+    default: op

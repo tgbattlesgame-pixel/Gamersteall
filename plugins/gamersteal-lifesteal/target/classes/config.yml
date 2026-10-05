@@ -1,0 +1,18 @@
+starting-hearts: 10
+maximum-hearts: 30
+minimum-hearts: 0
+hearts-per-kill: 1
+natural-death-heart-loss: false
+elimination-ban-hours: 48
+reset-rank: PEASANT
+reset-money: true
+reset-inventory: true
+reset-ender-chest: true
+reset-xp: true
+reset-homes: true
+reset-stats: true
+pair-kill-cooldown-seconds: 600
+
+# Player group names are resolved to lowercase for the LuckPerms API.
+# Existing LuckPerms parent groups are not removed; this preserves staff grants.
+database-file: playerdata.db

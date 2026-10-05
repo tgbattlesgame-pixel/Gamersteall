@@ -1,0 +1,110 @@
+Create a production-ready Minecraft Paper plugin called GamerStealLifeSteal.
+
+Target:
+- Paper 26.3
+- Java 25
+- Plugin must work with LuckPerms, EssentialsX, Vault and Geyser/Floodgate.
+- Do NOT depend on LifeStealZ or any other lifesteal plugin.
+
+CORE LIFESTEAL:
+- Starting hearts: 10
+- Maximum hearts: 30
+- Minimum hearts: 0
+- Player kills player:
+  - Victim loses 1 heart
+  - Killer gains 1 heart
+- Natural/environment/mob deaths do NOT change hearts.
+- TNT/explosions caused by a player must count as a player kill when the plugin can reliably identify the responsible player.
+- Heart gain cooldown per killer/victim pair: 10 minutes.
+- Prevent players from farming the same victim repeatedly during cooldown.
+- When a player reaches 0 hearts, immediately eliminate them.
+
+ELIMINATION:
+When a player reaches 0 hearts:
+1. Save their elimination state.
+2. Reset their gameplay data:
+   - inventory
+   - armor
+   - offhand
+   - ender chest
+   - XP
+   - level
+   - money through Vault
+   - homes through EssentialsX if available
+   - kills
+   - deaths
+   - heart count
+   - plugin progress
+3. RESET THEIR LUCKPERMS RANK TO PEASANT.
+   - This must use the LuckPerms API, not shell commands.
+   - Do NOT reset staff/admin permissions or remove permissions belonging to staff.
+   - Only reset the player's player-rank group.
+4. Ban the player for exactly 48 hours.
+5. The ban must survive server restarts.
+6. Store the expiration timestamp in the plugin's own data.
+7. Do not permanently ban the player.
+8. On expiration, automatically unban them.
+9. When they return:
+   - hearts = 10
+   - rank = PEASANT
+   - inventory empty
+   - ender chest empty
+   - XP = 0
+   - money = 0
+   - homes removed
+   - plugin stats reset
+10. Send the eliminated player a message explaining:
+   - they were eliminated
+   - ban duration is 48 hours
+   - their gameplay progress and rank were reset
+   - they return with 10 hearts
+11. Broadcast a clean elimination message to the server.
+
+IMPORTANT:
+- Never delete or modify another player's data.
+- Never wipe world files.
+- Never reset staff/admin accounts accidentally.
+- Use UUIDs internally, not player names.
+- Handle offline players safely.
+- Handle server restarts safely.
+- Handle duplicate elimination events safely.
+- Use asynchronous/database-safe storage where appropriate.
+- Do not block the main server thread.
+- Add logging for elimination/reset/unban actions.
+
+COMMANDS:
+- /gslifesteal
+- /gslifesteal hearts <player>
+- /gslifesteal sethearts <player> <amount>
+- /gslifesteal giveheart <player>
+- /gslifesteal removeheart <player>
+- /gslifesteal revive <player>
+- /gslifesteal unban <player>
+- /gslifesteal reset <player>
+- /gslifesteal reload
+
+Permissions:
+gslifesteal.admin
+gslifesteal.bypass
+gslifesteal.reload
+
+CONFIG:
+Create a clean config.yml with:
+- starting-hearts: 10
+- maximum-hearts: 30
+- minimum-hearts: 0
+- hearts-per-kill: 1
+- natural-death-heart-loss: false
+- elimination-ban-hours: 48
+- reset-rank: PEASANT
+- reset-money: true
+- reset-inventory: true
+- reset-ender-chest: true
+- reset-xp: true
+- reset-homes: true
+- reset-stats: true
+- pair-kill-cooldown-seconds: 600
+
+Before compiling, verify the Paper 26.3 API and Java 25 compatibility.
+Return the complete project source, plugin.yml, config.yml and a compiled .jar.
+Do not give pseudocode. The plugin must compile successfully.
